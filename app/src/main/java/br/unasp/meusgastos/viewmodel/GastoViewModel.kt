@@ -13,7 +13,7 @@ class GastosViewModel(
     private val repository: GastoRepository = GastoRepositoryMemoria()
 ) : ViewModel() {
 
-    var gastos by mutableStateOf(repository.listar())
+    var gastos = repository.listar()
         private set
 
     var filtroCategoria by mutableStateOf<Categoria?>(null)
