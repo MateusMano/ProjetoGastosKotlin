@@ -29,6 +29,6 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun App() {
-    val gastosViewModel: GastosViewModel = viewModel()
+    val gastosViewModel = GastosViewModel()
     TelaGastos(viewModel = gastosViewModel)
 }
