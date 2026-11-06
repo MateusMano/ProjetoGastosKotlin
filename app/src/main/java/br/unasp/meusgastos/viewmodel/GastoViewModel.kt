@@ -1,5 +1,4 @@
 package br.unasp.meusgastos.viewmodel
-import br.unasp.meusgastos.model.GastoRepositoryDemo
 
 import androidx.lifecycle.ViewModel
 import br.unasp.meusgastos.model.Categoria
@@ -11,7 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
 class GastosViewModel(
-    private val repository: GastoRepositoryMemoria = GastoRepositoryDemo()
+    private val repository: GastoRepository = GastoRepositoryMemoria()
 ) : ViewModel() {
 
     var gastos by mutableStateOf(repository.listar())
@@ -35,7 +34,7 @@ class GastosViewModel(
         valor: Double,
         categoria: Categoria
     ) {
-        if (descricao.isBlank() || valor <= 0) return
+
 
         repository.adicionar(descricao, valor, categoria)
         atualizarGastos()

@@ -79,13 +79,15 @@ fun TelaGastos(viewModel: GastosViewModel) {
 
         Button(
             onClick = {
-                viewModel.adicionarGasto(
-                    descricao,
-                    valor.toDoubleOrNull() ?: 0.0,
-                    categoria
-                )
-                descricao = ""
-                valor = ""
+                if (descricao.isNotBlank()) {
+                    viewModel.adicionarGasto(
+                        descricao,
+                        valor.toDoubleOrNull() ?: 0.0,
+                        categoria
+                    )
+                    descricao = ""
+                    valor = ""
+                }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
