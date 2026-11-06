@@ -13,7 +13,7 @@ class GastosViewModel(
     private val repository: GastoRepository = GastoRepositoryMemoria()
 ) : ViewModel() {
 
-    var gastos = repository.listar()
+    var gastos by mutableStateOf(repository.listar())
         private set
 
     var filtroCategoria by mutableStateOf<Categoria?>(null)
@@ -26,8 +26,8 @@ class GastosViewModel(
             gastos.filter { it.categoria == filtroCategoria }
         }
 
-    val total: Double
-        get() = gastosFiltrados.sumOf { it.valor }
+    var total by mutableStateOf(0.0)
+        private set
 
     fun adicionarGasto(
         descricao: String,
@@ -37,6 +37,7 @@ class GastosViewModel(
         if (descricao.isBlank() || valor <= 0) return
 
         repository.adicionar(descricao, valor, categoria)
+        total += valor
         atualizarGastos()
     }
 
