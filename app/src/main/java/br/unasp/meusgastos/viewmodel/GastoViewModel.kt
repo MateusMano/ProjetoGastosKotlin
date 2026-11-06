@@ -1,4 +1,5 @@
 package br.unasp.meusgastos.viewmodel
+import br.unasp.meusgastos.model.GastoRepositoryDemo
 
 import androidx.lifecycle.ViewModel
 import br.unasp.meusgastos.model.Categoria
@@ -10,7 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
 class GastosViewModel(
-    private val repository: GastoRepository = GastoRepositoryMemoria()
+    private val repository: GastoRepositoryMemoria = GastoRepositoryDemo()
 ) : ViewModel() {
 
     var gastos by mutableStateOf(repository.listar())
@@ -26,8 +27,8 @@ class GastosViewModel(
             gastos.filter { it.categoria == filtroCategoria }
         }
 
-    var total by mutableStateOf(0.0)
-        private set
+    val total: Double
+        get() = gastosFiltrados.sumOf { it.valor }
 
     fun adicionarGasto(
         descricao: String,
@@ -37,7 +38,6 @@ class GastosViewModel(
         if (descricao.isBlank() || valor <= 0) return
 
         repository.adicionar(descricao, valor, categoria)
-        total += valor
         atualizarGastos()
     }
 
